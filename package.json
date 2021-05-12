@@ -13,6 +13,7 @@
   "author": "Preeti Mallick",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "git": "^0.1.5",
     "simple-git": "^2.38.1"
