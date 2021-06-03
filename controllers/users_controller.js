@@ -4,32 +4,49 @@ const User = require('../models/user');
 // const { User_id } = require('../routes');
 
 module.exports.profile = function(req,res){
-   if(req.cookies.User_id){
-      User.findById(req.cookies.User_id, function(err, user){ 
+   if(req.user){
+      
+      
+      User.findById(req.user.id, function(err, user){ 
+         console.log('user found',user);
+
+         if(err){
+            console.log('error detecting the user',err);
+
+         }
+
+
          if(user){
             return res.render('users',{
                title:'user profile',
                user:user
             });
          }else{
-            return res.redirect('/user/sign-in');
+            return res.redirect('/users/sign-in');
          }
 
          });
       }else{
-         return res.redirect('/user/sign-in');
+         return res.redirect('/users/sign-in');
       }
    }
 
 
 //render the Sign In page
 module.exports.signIn = function(req,res){
+   if(req.isAuthenticated()){
+      return res.redirect('/users/profile');
+   }
+
    return res.render('user_sign_in',{
       title :'Codial | SignIn'
    });
 }
 //render the Sign Up Page
 module.exports.signUp = function(req,res){
+   if(req.isAuthenticated()){
+      return res.redirect('/users/profile');
+   }
    return res.render('user_sign_up',{
       title: 'Codial | SignUp'
    });
@@ -92,3 +109,8 @@ module.exports.create = function(req,res){
 
 //    });
 // }
+
+//sign-in and create a session for the user
+module.exports.createSession = function(req, res){
+   return res.redirect('/');
+}
