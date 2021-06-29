@@ -1,36 +1,46 @@
 
 
 const User = require('../models/user');
-// const { User_id } = require('../routes');
+//const { User_id } = require('../routes');
 
-module.exports.profile = function(req,res){
-   if(req.user){
+// module.exports.profile = function(req,res){
+//    if(req.user){
       
       
-      User.findById(req.user.id, function(err, user){ 
-         console.log('user found',user);
+//       User.findById(req.user.id, function(err, user){ 
+//          console.log('user found',user);
 
-         if(err){
-            console.log('error detecting the user',err);
+//          if(err){
+//             console.log('error detecting the user',err);
 
-         }
+//          }
 
 
-         if(user){
-            return res.render('users',{
-               title:'user profile',
-               user:user
-            });
-         }else{
-            return res.redirect('/users/sign-in');
-         }
+//          if(user){
+//             return res.render('users',{
+//                title:'user profile',
+//                user:user
+//             });
+//          }else{
+//             return res.redirect('/users/sign-in');
+//          }
 
-         });
-      }else{
-         return res.redirect('/users/sign-in');
-      }
-   }
+//          });
+//       }else{
+//          return res.redirect('/users/sign-in');
+//       }
+//    }
+module.exports.profile=function(req,res){
+   User.findById(req.params.id, function(err, user){
+      return res.render('user_profile',{
+         title:'User Profile',
+         profile_user:user
 
+      });
+
+   });
+
+}
 
 //render the Sign In page
 module.exports.signIn = function(req,res){
