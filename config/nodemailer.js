@@ -12,7 +12,9 @@ let transporter = nodemailer.createTransport({
     auth : {
         user:'ppmmallick679',
         pass:'PM8952.CGI'
-    }
+    },
+
+    tls: {rejectUnauthorized: false}
 });
 
 //it will define whenever we are going to send an html email and the file will be placed inside views inside mailers folder
@@ -28,8 +30,7 @@ let renderTemplate = (data, relativePath) => {
             }
             mailHTML = template;
 
-        }
-        )
+        })
 
         return mailHTML;
 }
