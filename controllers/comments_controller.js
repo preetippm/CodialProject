@@ -110,6 +110,10 @@ module.exports.destroy = async function(req,res){
             let postId = comment.post;
             comment.remove();
             let post = await Post.findByIdAndUpdate(postId, {$pull:{comments:req.params.id}});
+
+            //CHANGE:: destroy the associated likes for this comment
+            await Like.deleteMany({likeable:comment._id, onModle:'Comment'});
+            
                 return res.redirect('back');
 
             }else{
