@@ -5,7 +5,7 @@ const User = require('../models/user');
 module.exports.home =  async function(req,res){
    
     try{ 
-        //populate the user of each post
+        //CHANGE::populate the user of each post and comment
     let posts = await Post.find({})
     .sort('-createdAt')                  //-------------1--await
     .populate('user')

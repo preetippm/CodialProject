@@ -38,6 +38,7 @@ class PostComments{
 
                     // CHANGE :: enable the functionality of the toggle like button on the new comment
                     new ToggleLike($(' .toggle-like-button', newComment));
+                    
                     new Noty({
                         theme: 'relax',
                         text: "Comment published!",

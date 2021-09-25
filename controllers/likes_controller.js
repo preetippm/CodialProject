@@ -20,7 +20,7 @@ module.exports.toggleLike = async function(req, res){
 
         let exsistingLike = await Like.findOne({
             likeable: req.query.id,
-            onModle: req.query.type,
+            onModel: req.query.type,
             user: req.user._id
 
         })
@@ -29,7 +29,6 @@ module.exports.toggleLike = async function(req, res){
         if(exsistingLike){
             likeable.likes.pull(exsistingLike._id);
             likeable.save();
-
             exsistingLike.remove();
             deleted = true;
 
@@ -38,7 +37,7 @@ module.exports.toggleLike = async function(req, res){
             let newLike = await Like.create({
                 user: req.user._id,
                 likeable: req.query.id,
-                onModle : req.query.type
+                onModel : req.query.type
             });
 
             likeable.likes.push(newLike._id);
