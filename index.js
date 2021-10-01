@@ -8,7 +8,7 @@ const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
-const passportJwt = require('./config/passport-jwt-strategy');
+const passportJwt = require('./config/passport-jwt-strategy');  //passportJWT
 const passportGoogle = require('./config/passport-google-oauth2-stategy');
 
 const MongoStore = require('connect-mongodb-session')(session);
@@ -23,8 +23,9 @@ chatServer.listen(5000);
 console.log('chat server is listening on port 5000');
 
 
+
 app.use(sassMiddleware({
-    src:'./assets/scss',
+    src: './assets/scss',
     dest:'./assets/css',
     debug:true,
     outputStyle:'extended',
