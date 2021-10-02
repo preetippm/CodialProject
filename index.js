@@ -1,6 +1,9 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const app = express();
+const fs = require('fs');
+const rfs = require('rotating-file-stream');
+const path = require('path');
 const port = 8000;
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
@@ -15,6 +18,10 @@ const MongoStore = require('connect-mongodb-session')(session);
 const sassMiddleware = require('node-sass-middleware');
 const flash =require('connect-flash');
 const custoMware = require('./config/middleware');
+const env = require('./config/environment');
+const logger = require('morgan');
+//const { Stream } = require('stream');
+
 
 //setup the chat server to be used with socket.io
 const chatServer = require('http').Server(app);
@@ -24,6 +31,7 @@ console.log('chat server is listening on port 5000');
 
 
 
+if(process.env.CODIAL_ENVIRONMENT == 'development'){
 app.use(sassMiddleware({
     src: './assets/scss',
     dest:'./assets/css',
@@ -32,6 +40,7 @@ app.use(sassMiddleware({
     prefix:'/css'
 
 }));
+}
 
 app.use(express.urlencoded());
 
@@ -41,6 +50,8 @@ app.use(express.static('./assets'));
 
 //make the uploads path available to the browser
 app.use('/uploads', express.static(__dirname + '/uploads'));
+
+app.use(logger( 'combined', process.env.morgan.stream));
 
 app.use(expressLayouts);
 // extract style and scripts from sub pages into the layout
